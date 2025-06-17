@@ -1,7 +1,10 @@
-from django.utils import timezone
-from django.shortcuts import render, redirect
+from datetime import datetime
 
-from app_main.models import Class
+from django.utils import timezone
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+
+from app_main.models import Class, Lesson
 
 
 def home_page(request):
@@ -57,3 +60,63 @@ def class_detail(request, class_id):
         "active_route": "classes",
     }
     return render(request, "class_detail.html", context)
+
+
+def lesson_edit(request, lesson_id):
+    lesson = get_object_or_404(Lesson, id=lesson_id)
+
+    if request.method == "POST":
+        theme = request.POST.get("theme")
+        lesson_date_str = request.POST.get("lesson_date")
+
+        try:
+            lesson_datetime = datetime.strptime(lesson_date_str, "%Y-%m-%dT%H:%M")
+        except ValueError:
+            messages.error(request, "Invalid date format.")
+            return redirect(f"/lesson-edit/{lesson.id}")
+
+        if lesson_datetime.date() <= timezone.now().date():
+            messages.error(request, "Lesson date cannot be today or in the past.")
+            return redirect(f"/lesson-edit/{lesson.id}")
+
+        lesson.theme = theme
+        lesson.lesson_date = lesson_datetime
+        lesson.save()
+        
+        return redirect(f"/classes/{lesson.class_name.id}")
+
+    context = {
+        "lesson": lesson,
+    }
+    return render(request, "lesson_form.html", context)
+
+
+def lesson_delete(request, lesson_id):
+    lesson = get_object_or_404(Lesson, id=lesson_id)
+    class_id = lesson.class_name.id
+
+    if request.method == "POST":
+        if lesson.class_name.teacher != request.user:
+            messages.error(request, "You cannot delete other teacher's lesson")
+            return redirect("/classes/")
+
+        lesson.delete()
+        return redirect(f"/classes/{class_id}")
+
+    context = {
+        "lesson": lesson,
+    }
+    return render(request, "delete.html", context)
+
+
+def lesson_detail(request, lesson_id):
+    lesson = get_object_or_404(Lesson, id=lesson_id)
+
+    if lesson.class_name.teacher != request.user:
+        messages.error(request, "You cannot view other teacher's lesson")
+        return redirect("/classes/")
+
+    context = {
+        "lesson": lesson,
+    }
+    return render(request, "lesson_datail.html", context)

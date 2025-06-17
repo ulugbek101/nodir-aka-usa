@@ -35,17 +35,23 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900">
                                 {{ forloop.counter }}
                             </th>
-                            <td class="px-6 py-4">
-                                {{ lesson.theme }}
+                            <td class="px-6 py-4 font-semibold">
+                                <a href="{% url 'lesson_detail' lesson_id=lesson.id %}">
+                                    {{ lesson.theme }}
+                                </a>
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-4 font-semibold">
                                 {{ lesson.lesson_date }}
                             </td>
                             <td class="px-6 py-4">
                                 {% if today <= lesson.lesson_date %}
                                     <div class="flex items-center gap-3">
-                                        <span class="material-icons hover:cursor-pointer hover:text-white hover:bg-yellow-600 hover:border-yellow-600 py-1 px-2 border border-gray-700 rounded">edit</span>
-                                        <span class="material-icons hover:cursor-pointer hover:text-white hover:bg-red-600 hover:border-red-600 py-1 px-2 border border-gray-700 rounded">delete</span>
+                                        <a href="{% url 'lesson_edit' lesson_id=lesson.id %}">
+                                            <span class="material-icons hover:cursor-pointer hover:text-white hover:bg-yellow-600 hover:border-yellow-600 py-1 px-2 border border-gray-700 rounded">edit</span>
+                                        </a>
+                                        <a href="{% url 'lesson_delete' lesson_id=lesson.id %}">
+                                            <span class="material-icons hover:cursor-pointer hover:text-white hover:bg-red-600 hover:border-red-600 py-1 px-2 border border-gray-700 rounded">delete</span>
+                                        </a>
                                     </div>
                                 {% endif %}
                             </td>

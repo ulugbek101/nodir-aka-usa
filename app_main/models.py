@@ -1,8 +1,11 @@
 from django.db import models
 from ckeditor.fields import RichTextField
 
+from django.conf import settings
+
 
 class Class(models.Model):
+    teacher = models.ForeignKey(to=settings.AUTH_USER_MODEL, limit_choices_to={"role": "teacher"}, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=10)
 
     def __str__(self):
@@ -12,6 +15,7 @@ class Class(models.Model):
 class Lesson(models.Model):
     class_name = models.ForeignKey(to=Class, on_delete=models.CASCADE)
     theme = models.CharField(max_length=200)
+    description = RichTextField(null=True)
     lesson_date = models.DateTimeField()
 
     def __str__(self):
