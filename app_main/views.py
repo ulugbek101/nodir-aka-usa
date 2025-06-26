@@ -120,3 +120,12 @@ def lesson_detail(request, lesson_id):
         "lesson": lesson,
     }
     return render(request, "lesson_datail.html", context)
+
+
+def create_homework(request, lesson_id):
+    lesson = Lesson.objects.get(id=lesson_id)
+
+    context = {
+        "lesson": lesson,
+    }
+    return render(request, "create_homework.html", context)

@@ -18,7 +18,7 @@
                 <span class="text-white font-semibold text-start">Hello, {{ request.user.last_name.0 }}. {{ request.user.first_name }} 👋</span>
             </div>
         </div>
-        <ul class="space-y-2 font-medium h-full flex flex-col justify-between">
+        <ul class="font-medium h-full flex flex-col justify-between">
             {% if request.user.role == 'teacher' %}
                 <li>
                     <a href="#"

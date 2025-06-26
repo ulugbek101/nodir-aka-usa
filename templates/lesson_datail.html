@@ -10,7 +10,12 @@
 
         <p>Theme: {{ lesson.theme }}</p>
         <p>Lesson date: {{ lesson.lesson_date }}</p>
-        <p style="all: unset;">{{ lesson.description|safe }}</p>
+
+        <br><br>
+        <a href="/create-homework/{{ lesson.id }}/" class="bg-gray-300 py-1 px-2 rounded max-w-max">Add homework</a>
+        <br><br>
+
+        <div class="prose">{{ lesson.description|safe }}</div>
     </div>
 
 {% endblock content %}
