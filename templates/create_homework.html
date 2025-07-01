@@ -8,14 +8,54 @@
     </div>
 
     <br><br>
-    <a class="py-1 px-2 border border-gray-300 rounded" href="{{ request.META.HTTP_REFERER }}">Back</a>
+    <a class="py-1 px-2 border border-gray-300 rounded" href="/lesson-detail/{{ lesson.id }}/">Back</a>
     <br><br>
 
-    <form action="" class="flex flex-col gap-2 w-1/2">
-        <input class="border border-gray-300 outline-none py-1 px-2 rounded" type="text" placeholder="title">
-        <textarea class="border border-gray-300 outline-none py-1 px-2 rounded" name="" id="" cols="30" rows="10" placeholder="Description"></textarea>
-        <input class="border border-gray-300 outline-none py-1 px-2 rounded" type="datetime-local">
-        <button class="border border-gray-300 py-1 px-2 rounded">Assign</button>
+    {{ form.media }}
+
+    <form action="" method="post" enctype="multipart/form-data" class="flex flex-col gap-2">
+        {% csrf_token %}
+
+        <div class="flex flex-col gap-1 w-1/2">
+            {{ form.title.label }}:
+            {{ form.title }}
+        </div>
+
+        <div class="flex flex-col gap-1 w-1/2">
+            {{ form.body.label }}:
+            {{ form.body }}
+        </div>
+
+        <div class="flex flex-col gap-1 w-1/2">
+            {{ form.file.label }}:
+            {{ form.file }}
+        </div>
+
+        <button class="w-1/2 border border-gray-300 hover:bg-gray-300 transition py-1 rounded text-center font-semibold outline-none" type="submit">
+            {% if not lesson.homework %}
+                Create homework
+            {% else %}
+                Update homework
+            {% endif %}
+        </button>
     </form>
+
+{#    <form action="" class="flex flex-col gap-2 w-1/2">#}
+{##}
+{#        <div class="flex flex-col gap-1">#}
+{#            <label for="title" class="font-meidum">Title:</label>#}
+{#            <input id="title" class="border border-gray-300 outline-none py-1 px-2 rounded" type="text" placeholder="Homework title">#}
+{#        </div>#}
+{##}
+{#        <div class="flex flex-col gap-1">#}
+{#            <label for="description" class="font-meidum">Description</label>#}
+{#            <textarea class="border border-gray-300 outline-none py-1 px-2 rounded" id="description" cols="30" rows="10" placeholder="Description"></textarea>#}
+{#        </div>#}
+{#        <div class="flex flex-col gap-1">#}
+{#            <label for="deadline" class="font-meidum">Deadline:</label>#}
+{#            <input id="deadline" class="border border-gray-300 outline-none py-1 px-2 rounded" type="datetime-local">#}
+{#        </div>#}
+{#        <button class="border border-gray-300 py-1 px-2 rounded">Assign</button>#}
+{#    </form>#}
 
 {% endblock %}

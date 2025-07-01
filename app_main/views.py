@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
 from app_main.models import Class, Lesson
+from app_main.forms import HomeworkForm
 
 
 def home_page(request):
@@ -124,8 +125,28 @@ def lesson_detail(request, lesson_id):
 
 def create_homework(request, lesson_id):
     lesson = Lesson.objects.get(id=lesson_id)
+    form = HomeworkForm()
+
+    if request.method == "POST":
+        form = HomeworkForm(request.POST, request.FILES)
+        homework = form.save(commit=False)
+        homework.lesson = lesson
+        homework.save()
+        return redirect(f"/lesson-detail/{lesson_id}/")
 
     context = {
         "lesson": lesson,
+        "form": form,
+    }
+    return render(request, "create_homework.html", context)
+
+
+def edit_homework(request, lesson_id):
+    lesson = Lesson.objects.get(id=lesson_id)
+    form = HomeworkForm(instance=lesson.homework)
+
+    context = {
+        "lesson": lesson,
+        "form": form,
     }
     return render(request, "create_homework.html", context)
