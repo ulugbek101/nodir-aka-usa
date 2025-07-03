@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
-from app_main.models import Class, Lesson
+from app_main.models import Class, Lesson, Homework
 from app_main.forms import HomeworkForm
 
 
@@ -138,7 +138,7 @@ def create_homework(request, lesson_id):
         "lesson": lesson,
         "form": form,
     }
-    return render(request, "create_homework.html", context)
+    return render(request, "homework_form.html", context)
 
 
 def edit_homework(request, lesson_id):
@@ -149,4 +149,19 @@ def edit_homework(request, lesson_id):
         "lesson": lesson,
         "form": form,
     }
-    return render(request, "create_homework.html", context)
+    return render(request, "homework_form.html", context)
+
+
+def delete_homework(request, homework_id):
+    homework = Homework.objects.get(id=homework_id)
+    homework.delete()
+    return redirect(f"/lesson-detail/{homework.lesson.id}/")
+
+
+def view_homework(request, homework_id):
+    homework = Homework.objects.get(id=homework_id)
+
+    context = {
+        "homework": homework,
+    }
+    return render(request, "homework_detail.html", context)

@@ -15,7 +15,10 @@
         {% if not lesson.homework %}
             <a href="/create-homework/{{ lesson.id }}/" class="bg-gray-300 py-1 px-2 rounded max-w-max">Add homework</a>
         {% else %}
-            <a href="/edit-homework/{{ lesson.id }}/" class="bg-yellow-500 py-1 px-2 rounded max-w-max">Edit homework</a>
+            <div class="flex flex-row items-center gap-2">
+                <a href="/edit-homework/{{ lesson.id }}/" class="bg-yellow-500 py-1 px-2 rounded max-w-max">Edit homework</a>
+                <a href="/view-homework/{{ lesson.homework.id }}" class="bg-gray-300 py-1 px-2 rounded max-w-max">View homework</a>
+            </div>
         {% endif %}
         <br><br>
 
