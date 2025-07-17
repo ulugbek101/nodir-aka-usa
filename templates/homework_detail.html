@@ -1,18 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% include 'components/_sidebar.html' %}
+    <div class="p-4 sm:ml-64">
+        {% include 'components/_sidebar.html' %}
 
-    <div class="flex flex-col">
-        <div class="border-b-2 border-b-gray-600 pb-8">
-            <h2 class="text-4xl font-semibold text-gray-800">Homework: {{ homework.title }}</h2>
+        <div class="flex flex-col">
+            <div class="border-b-2 border-b-gray-600 pb-8">
+                <h2 class="text-4xl font-semibold text-gray-800">Homework: {{ homework.title }}</h2>
+            </div>
+
+            <br><br>
+            <a class="max-w-max py-1 px-2 border border-gray-300 rounded"
+               href="/lesson-detail/{{ homework.lesson.id }}/">Back</a>
+            <br><br>
+
+            <div class="prose">
+                {{ homework.body|safe }}
+            </div>
         </div>
-        
-        <br><br>
-        <a class="max-w-max py-1 px-2 border border-gray-300 rounded" href="/lesson-detail/{{ homework.lesson.id }}/">Back</a>
-        <br><br>
-        
-        <div class="prose">{{ homework.body|safe }}</div>
     </div>
-
 {% endblock content %}

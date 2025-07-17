@@ -1,80 +1,93 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% include 'components/_sidebar.html' %}
+    <div class="p-4 sm:ml-64">
+        {% include 'components/_sidebar.html' %}
 
-    <div class="border-b-2 border-b-gray-600 pb-8">
-        <h2 class="text-4xl font-semibold text-gray-800">
-            {% if lesson.homework %}
-                Update homework: {{ lesson.theme }}
-            {% else %}
-                Create homework for: {{ lesson.theme }}
-            {% endif %}
-        </h2>
-    </div>
-
-    <br><br>
-    <a class="py-1 px-2 border border-gray-300 rounded" href="/lesson-detail/{{ lesson.id }}/">Back</a>
-    {% if lesson.homework %}
-        <button id="openDeleteModalBtn" class="py-1 px-2 border border-red-500 text-white font-semibold bg-red-500 rounded">Delete</button>
-    {% endif %}
-    <br><br>
-
-    {{ form.media }}
-
-    <form action="" method="post" enctype="multipart/form-data" class="flex flex-col gap-2">
-        {% csrf_token %}
-
-        <div class="flex flex-col gap-1 w-1/2">
-            {{ form.title.label }}:
-            {{ form.title }}
+        <div class="border-b-2 border-b-gray-600 pb-8">
+            <h2 class="text-4xl font-semibold text-gray-800">
+                {% if lesson.homework %}
+                    Update homework: {{ lesson.theme }}
+                {% else %}
+                    Create homework for: {{ lesson.theme }}
+                {% endif %}
+            </h2>
         </div>
 
-        <div class="flex flex-col gap-1 w-1/2">
-            {{ form.body.label }}:
-            {{ form.body }}
-        </div>
-
-        <div class="flex flex-col gap-1 w-1/2">
-            {{ form.file.label }}:
-            {{ form.file }}
-        </div>
-
-        <button class="w-1/2 border border-gray-300 hover:bg-gray-300 transition py-1 rounded text-center font-semibold outline-none" type="submit">
-            {% if not lesson.homework %}
-                Create homework
-            {% else %}
-                Update homework
-            {% endif %}
+        <br><br>
+        <button class="font-semibold py-1 px-2 border border-gray-800 text-gray-800 rounded">
+            <a href="/lesson-detail/{{ lesson.id }}/">Back</a>
         </button>
-    </form>
+        {% if lesson.homework %}
+            <button id="openDeleteModalBtn"
+                    class="py-1 px-2 border border-red-500 text-white font-semibold bg-red-500 rounded">
+                Delete
+            </button>
+        {% endif %}
+        <br><br>
 
-    <div id="deleteModal" class="hidden absolute top-0 left-0 w-full h-full bg-black opacity-80 flex items-center justify-center z-50">
-        <div class="py-5 px-10 bg-white rounded text-black font-semibold flex flex-col gap-5">
-            <div class="flex flex-row justify-end">
-                <button id="closeBtn" class="rounded px-3 py-1 font-bold text-lg border-2 border-gray-700 text-gray-700 hover:bg-gray-700 hover:text-white transition">x</button>
+        {{ form.media }}
+
+        <form action="" method="post" enctype="multipart/form-data" class="flex flex-col gap-2">
+            {% csrf_token %}
+
+            <div class="flex flex-col gap-1 w-1/2">
+                {{ form.title.label }}:
+                {{ form.title }}
             </div>
-            <h2>Are you sure to delete this homework ?</h2>
-            <div class="flex items-center gap-3 justify-end">
-                <button id="closeBtn" class="rounded border border-gray-700 bg-gray-700 text-white px-3 py-1">No</button>
-                <a href="/delete-homework/{{ lesson.homework.id }}/" class="rounded border border-red-700 bg-red-700 text-white px-3 py-1">Yes, 100%</a>
+
+            <div class="flex flex-col gap-1 w-1/2">
+                {{ form.body.label }}:
+                {{ form.body }}
+            </div>
+
+            <div class="flex flex-col gap-1 w-1/2">
+                {{ form.file.label }}:
+                {{ form.file }}
+            </div>
+
+            <button class="w-1/2 border border-gray-300 hover:bg-gray-300 transition py-1 rounded text-center font-semibold outline-none"
+                    type="submit">
+                {% if not lesson.homework %}
+                    Create homework
+                {% else %}
+                    Update homework
+                {% endif %}
+            </button>
+        </form>
+
+        <div id="deleteModal"
+             class="hidden absolute top-0 left-0 w-full h-full bg-black opacity-80 flex items-center justify-center z-50">
+            <div class="py-5 px-10 bg-white rounded text-black font-semibold flex flex-col gap-5">
+                <div class="flex flex-row justify-end">
+                    <button id="closeBtn"
+                            class="rounded px-3 py-1 font-bold text-lg border-2 border-gray-700 text-gray-700 hover:bg-gray-700 hover:text-white transition">
+                        x
+                    </button>
+                </div>
+                <h2>Are you sure to delete this homework ?</h2>
+                <div class="flex items-center gap-3 justify-end">
+                    <button id="closeBtn" class="rounded border border-gray-700 bg-gray-700 text-white px-3 py-1">No
+                    </button>
+                    <a href="/delete-homework/{{ lesson.homework.id }}/"
+                       class="rounded border border-red-700 bg-red-700 text-white px-3 py-1">Yes, 100%</a>
+                </div>
             </div>
         </div>
-    </div>
-    
-    <script type="text/javascript">
-        const openDeleteModalBtn = document.querySelector("#openDeleteModalBtn")
-        const closeBtns = document.querySelectorAll("#closeBtn");
-        
-        openDeleteModalBtn.addEventListener("click", function() {
-            document.querySelector("#deleteModal").classList.remove("hidden");
-        })
-        
-        closeBtns.forEach(btn => {
-            btn.addEventListener("click", function() {
-                document.querySelector("#deleteModal").classList.add("hidden");
-            })
-        })
-    </script>
 
+        <script type="text/javascript">
+            const openDeleteModalBtn = document.querySelector("#openDeleteModalBtn")
+            const closeBtns = document.querySelectorAll("#closeBtn");
+
+            openDeleteModalBtn.addEventListener("click", function () {
+                document.querySelector("#deleteModal").classList.remove("hidden");
+            })
+
+            closeBtns.forEach(btn => {
+                btn.addEventListener("click", function () {
+                    document.querySelector("#deleteModal").classList.add("hidden");
+                })
+            })
+        </script>
+    </div>
 {% endblock %}

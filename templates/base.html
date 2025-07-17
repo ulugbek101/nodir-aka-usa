@@ -6,9 +6,12 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <!-- Tailwind CSS CDN link -->
+    <!-- Tailwind CSS CDN link for global styles -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.tailwindcss.com/3.4.5?plugins=typography"></script>
+
+    <!-- Flowbite CSS CDN link for login page styles -->
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet"/>
 
     <!-- Material(Google) icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -16,12 +19,13 @@
     <title>E-CLASS</title>
 </head>
 <body>
-    
-    <div class="p-4 sm:ml-64">
-        {% block content %}
-            
-        {% endblock %}
-    </div>
-    
+
+
+{% block content %} {% endblock %}
+
+{% block login_page %} {% endblock login_page %}
+
+<!-- Flowbite JS CDN link for global events -->
+<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 </body>
 </html>

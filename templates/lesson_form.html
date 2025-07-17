@@ -1,29 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% include 'components/_sidebar.html' %}
+    <div class="p-4 sm:ml-64">
+        {% include 'components/_sidebar.html' %}
 
-    <div class="flex flex-col">
-        <div class="border-b-2 border-b-gray-600 pb-8">
-            <h2 class="text-4xl font-semibold text-gray-800">
-                <a href="{{ request.META.HTTP_REFERER }}">
-                    <span class="material-icons pt-2 pb-1 px-2 rounded-full border border-gray-800">chevron_left</span>
-                </a>
-                Lesson edit page
-            </h2>
+        <div class="flex flex-col">
+            <div class="border-b-2 border-b-gray-600 pb-8">
+                <h2 class="text-4xl font-semibold text-gray-800">
+                    <a href="{{ request.META.HTTP_REFERER }}">
+                        <span class="material-icons pt-2 pb-1 px-2 rounded-full border border-gray-800">chevron_left</span>
+                    </a>
+                    Lesson edit page
+                </h2>
+            </div>
+            <form method="post" action="" class="w-1/4 flex flex-col gap-3 mt-3">
+                {% csrf_token %}
+                <div class="flex flex-col gap-1">
+                    <label for="theme">Lesson theme:</label>
+                    <input name="theme" value="{{ lesson.theme }}" id="theme" type="text"
+                           class="outline-none rounded px-2 py-1 border-2 border-slate-800">
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label for="theme">Lesson date:</label>
+                    <input name="lesson_date" value="{{ lesson.lesson_date|date:"Y-m-d\\TH:i" }}" id="theme"
+                           type="datetime-local" class="outline-none rounded px-2 py-1 border-2 border-slate-800">
+                </div>
+                <button type="submit"
+                        class="px-2 py-1 rounded bg-gray-800 hover:bg-gray-900 hover:cursor-pointer transition text-white w-full mt-2">
+                    Save
+                </button>
+            </form>
         </div>
-        <form method="post" action="" class="w-1/4 flex flex-col gap-3 mt-3">
-            {% csrf_token %}
-            <div class="flex flex-col gap-1">
-                <label for="theme">Lesson theme:</label>
-                <input name="theme" value="{{ lesson.theme }}" id="theme" type="text" class="outline-none rounded px-2 py-1 border-2 border-slate-800">
-            </div>
-            <div class="flex flex-col gap-1">
-                <label for="theme">Lesson date:</label>
-                <input name="lesson_date" value="{{ lesson.lesson_date|date:"Y-m-d\\TH:i" }}" id="theme" type="datetime-local" class="outline-none rounded px-2 py-1 border-2 border-slate-800">
-            </div>
-            <button type="submit" class="px-2 py-1 rounded bg-gray-800 hover:bg-gray-900 hover:cursor-pointer transition text-white w-full mt-2">Save</button>
-        </form>
     </div>
-
 {% endblock content %}

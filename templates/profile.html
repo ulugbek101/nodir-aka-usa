@@ -1,49 +1,68 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% include 'components/_sidebar.html' %}
-    
-	<div class="flex flex-col">
-        <div class="border-b-2 border-b-gray-600 pb-8">
-            <h2 class="text-4xl font-semibold text-gray-800">Profile page</h2>
-        </div>
-        <div class="grid grid-cols-12">
-            <div class="col-span-3">
-                <img width="w-full" src="https://res.cloudinary.com/dhtrn05k4/image/upload/v1/shams-media/profile-pictures/user-default.png" alt="Profile">
+    <div class="p-4 sm:ml-64">
+        {% include 'components/_sidebar.html' %}
+
+        <div class="flex flex-col">
+            <div class="border-b-2 border-b-gray-600 pb-8">
+                <h2 class="text-4xl font-semibold text-gray-800">Profile page</h2>
             </div>
-            <div class="col-span-9">
-                <form action="/update-profile/" method="post" class="h-full flex flex-col gap-2 justify-center">
-                    {% csrf_token %}
-                    <div class="grid grid-cols-12 gap-2">
-                        <div class="flex flex-col col-span-4">
-                            <label class="font-semibold text-gray-600" for="first_name">First name:</label>
-                            <input value="{{ request.user.first_name|default_if_none:"" }}" id="first_name" name="first_name" type="text" class="border-2 border-gray-600 rounded outline-none py-2 px-1 font-semibold text-gray-600">
+            <div class="grid grid-cols-12">
+                <div class="col-span-3">
+                    <img width="w-full"
+                         src="https://res.cloudinary.com/dhtrn05k4/image/upload/v1/shams-media/profile-pictures/user-default.png"
+                         alt="Profile">
+                </div>
+                <div class="col-span-9">
+                    <form action="/update-profile/" method="post" class="h-full flex flex-col gap-2 justify-center">
+                        {% csrf_token %}
+                        <div class="grid grid-cols-12 gap-2">
+                            <div class="flex flex-col col-span-4">
+                                <label class="font-semibold text-gray-600" for="first_name">First name:</label>
+                                <input value="{{ request.user.first_name|default_if_none:"" }}" id="first_name"
+                                       name="first_name" type="text"
+                                       class="border-2 border-gray-600 rounded outline-none py-2 px-1 font-semibold text-gray-600">
+                            </div>
+                            <div class="flex flex-col col-span-4">
+                                <label class="font-semibold text-gray-600" for="last_name">Last name:</label>
+                                <input value="{{ request.user.last_name|default_if_none:"" }}" id="last_name"
+                                       name="last_name" type="text"
+                                       class="border-2 border-gray-600 rounded outline-none py-2 px-1 font-semibold text-gray-600">
+                            </div>
+                            <div class="flex flex-col col-span-4">
+                                <label class="font-semibold text-gray-600" for="middle_name">Middle name:</label>
+                                <input value="{{ request.user.middle_name|default_if_none:"" }}" id="middle_name"
+                                       name="middle_name" type="text"
+                                       class="border-2 border-gray-600 rounded outline-none py-2 px-1 font-semibold text-gray-600">
+                            </div>
                         </div>
-                        <div class="flex flex-col col-span-4">
-                            <label class="font-semibold text-gray-600" for="last_name">Last name:</label>
-                            <input value="{{ request.user.last_name|default_if_none:"" }}" id="last_name" name="last_name" type="text" class="border-2 border-gray-600 rounded outline-none py-2 px-1 font-semibold text-gray-600">
+                        <div class="grid grid-cols-12 gap-2">
+                            <div class="flex flex-col col-span-6">
+                                <label class="font-semibold text-gray-600" for="email">Email address:</label>
+                                <input value="{{ request.user.email|default_if_none:"" }}" id="email" name="email"
+                                       type="email"
+                                       class="border-2 border-gray-600 rounded outline-none py-2 px-1 font-semibold text-gray-600">
+                            </div>
+                            <div class="flex flex-col col-span-6">
+                                <label class="font-semibold text-gray-600" for="phone_number">Phone number:</label>
+                                <input value="{{ request.user.phone_number|default_if_none:"" }}" id="phone_number"
+                                       name="phone_number" type="text"
+                                       class="border-2 border-gray-600 rounded outline-none py-2 px-1 font-semibold text-gray-600">
+                            </div>
                         </div>
-                        <div class="flex flex-col col-span-4">
-                            <label class="font-semibold text-gray-600" for="middle_name">Middle name:</label>
-                            <input value="{{ request.user.middle_name|default_if_none:"" }}" id="middle_name" name="middle_name" type="text" class="border-2 border-gray-600 rounded outline-none py-2 px-1 font-semibold text-gray-600">
+                        <div class="flex flex-col">
+                            <label class="font-semibold text-gray-600" for="address">Home address:</label>
+                            <input value="{{ request.user.address|default_if_none:"" }}" id="address" name="address"
+                                   type="text"
+                                   class="border-2 border-gray-600 rounded outline-none py-2 px-1 font-semibold text-gray-600">
                         </div>
-                    </div>
-                    <div class="grid grid-cols-12 gap-2">
-                        <div class="flex flex-col col-span-6">
-                            <label class="font-semibold text-gray-600" for="email">Email address:</label>
-                            <input value="{{ request.user.email|default_if_none:"" }}" id="email" name="email" type="email" class="border-2 border-gray-600 rounded outline-none py-2 px-1 font-semibold text-gray-600">
-                        </div>
-                        <div class="flex flex-col col-span-6">
-                            <label class="font-semibold text-gray-600" for="phone_number">Phone number:</label>
-                            <input value="{{ request.user.phone_number|default_if_none:"" }}" id="phone_number" name="phone_number" type="text" class="border-2 border-gray-600 rounded outline-none py-2 px-1 font-semibold text-gray-600">
-                        </div>
-                    </div>
-                    <div class="flex flex-col">
-                        <label class="font-semibold text-gray-600" for="address">Home address:</label>
-                        <input value="{{ request.user.address|default_if_none:"" }}" id="address" name="address" type="text" class="border-2 border-gray-600 rounded outline-none py-2 px-1 font-semibold text-gray-600">
-                    </div>
-                    <button type="submit" class="text-center font-semibold text-white bg-gray-800 rounded py-2 hover:cursor-pointer active:scale-95 transition">Update profile</button>
-                </form>
+                        <button type="submit"
+                                class="text-center font-semibold text-white bg-gray-800 rounded py-2 hover:cursor-pointer active:scale-95 transition">
+                            Update profile
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

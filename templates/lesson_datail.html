@@ -1,28 +1,38 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% include 'components/_sidebar.html' %}
+    <div class="p-4 sm:ml-64">
+        {% include 'components/_sidebar.html' %}
 
-    <div class="flex flex-col">
-        <div class="border-b-2 border-b-gray-600 pb-8">
-            <h2 class="text-4xl font-semibold text-gray-800">Lesson: {{ lesson.theme }}</h2>
-        </div>
-
-        <p>Theme: {{ lesson.theme }}</p>
-        <p>Lesson date: {{ lesson.lesson_date }}</p>
-
-        <br><br>
-        {% if not lesson.homework %}
-            <a href="/create-homework/{{ lesson.id }}/" class="bg-gray-300 py-1 px-2 rounded max-w-max">Add homework</a>
-        {% else %}
-            <div class="flex flex-row items-center gap-2">
-                <a href="/edit-homework/{{ lesson.id }}/" class="bg-yellow-500 py-1 px-2 rounded max-w-max">Edit homework</a>
-                <a href="/view-homework/{{ lesson.homework.id }}" class="bg-gray-300 py-1 px-2 rounded max-w-max">View homework</a>
+        <div class="flex flex-col">
+            <div class="border-b-2 border-b-gray-600 pb-8">
+                <h2 class="text-4xl font-semibold text-gray-800">Lesson: {{ lesson.theme }}</h2>
             </div>
-        {% endif %}
-        <br><br>
 
-        <div class="prose">{{ lesson.description|safe }}</div>
+            <div class="prose m-auto mt-10">
+                <div class="flex flex-col gap-2 my-10">
+                    <p class="m-0 font-semibold">Theme: {{ lesson.theme }}</p>
+                    <p class="m-0 font-semibold">Lesson date: {{ lesson.lesson_date }}</p>
+                </div>
+                {% if not lesson.homework %}
+                    <a href="/create-homework/{{ lesson.id }}/"
+                       class="block mb-10 no-underline font-semibold text-xl bg-yellow-500 py-2 px-4 rounded max-w-max">
+                        Add homework
+                    </a>
+                {% else %}
+                    <div class="flex flex-row justify-start items-center gap-5 mb-10">
+                        <a href="/edit-homework/{{ lesson.id }}/"
+                           class="no-underline font-semibold text-xl bg-yellow-500 py-2 px-4 rounded max-w-max">
+                            Edit homework
+                        </a>
+                        <a href="/view-homework/{{ lesson.homework.id }}"
+                           class="no-underline font-semibold text-xl bg-gray-300 py-2 px-4 rounded max-w-max">
+                            View homework
+                        </a>
+                    </div>
+                {% endif %}
+                {{ lesson.description|safe }}
+            </div>
+        </div>
     </div>
-
 {% endblock content %}

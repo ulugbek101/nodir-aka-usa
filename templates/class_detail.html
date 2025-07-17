@@ -1,17 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% include "components/_sidebar.html" %}
+    <div class="p-4 sm:ml-64">
+        {% include "components/_sidebar.html" %}
 
-    <div class="flex flex-col">
-        <div class="border-b-2 border-b-gray-600 pb-8">
-            <h2 class="text-4xl font-semibold text-gray-800">Class: {{ class.name }}</h2>
-        </div>
+        <div class="flex flex-col">
+            <div class="border-b-2 border-b-gray-600 pb-8">
+                <h2 class="text-4xl font-semibold text-gray-800">Class: {{ class.name }}</h2>
+            </div>
 
-        <div class="mt-4 relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-700">
+            <div class="mt-4 relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-700">
 
-                <thead class="text-xs text-gray-700 uppercase bg-gray-300">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-300">
                     <tr>
                         <th scope="col" class="px-6 py-3">
                             №
@@ -26,46 +27,48 @@
                             Edit / Delete
                         </th>
                     </tr>
-                </thead>
+                    </thead>
 
-                <tbody>
+                    <tbody>
                     {% if class.lesson_set.count > 0 %}
                         {% for lesson in class.lesson_set.all %}
-                        <tr class="odd:bg-white even:bg-gray-200 border-b border-gray-200">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900">
-                                {{ forloop.counter }}
-                            </th>
-                            <td class="px-6 py-4 font-semibold">
-                                <a href="{% url 'lesson_detail' lesson_id=lesson.id %}">
-                                    {{ lesson.theme }}
-                                </a>
-                            </td>
-                            <td class="px-6 py-4 font-semibold">
-                                {{ lesson.lesson_date }}
-                            </td>
-                            <td class="px-6 py-4">
-                                {% if today <= lesson.lesson_date %}
-                                    <div class="flex items-center gap-3">
-                                        <a href="{% url 'lesson_edit' lesson_id=lesson.id %}">
-                                            <span class="material-icons hover:cursor-pointer hover:text-white hover:bg-yellow-600 hover:border-yellow-600 py-1 px-2 border border-gray-700 rounded">edit</span>
-                                        </a>
-                                        <a href="{% url 'lesson_delete' lesson_id=lesson.id %}">
-                                            <span class="material-icons hover:cursor-pointer hover:text-white hover:bg-red-600 hover:border-red-600 py-1 px-2 border border-gray-700 rounded">delete</span>
-                                        </a>
-                                    </div>
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
+                            <tr class="odd:bg-white even:bg-gray-200 border-b border-gray-200">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900">
+                                    {{ forloop.counter }}
+                                </th>
+                                <td class="px-6 py-4 font-semibold">
+                                    <a href="{% url 'lesson_detail' lesson_id=lesson.id %}">
+                                        {{ lesson.theme }}
+                                    </a>
+                                </td>
+                                <td class="px-6 py-4 font-semibold">
+                                    {{ lesson.lesson_date }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {% if today <= lesson.lesson_date %}
+                                        <div class="flex items-center gap-3">
+                                            <a href="{% url 'lesson_edit' lesson_id=lesson.id %}">
+                                                <span class="material-icons hover:cursor-pointer hover:text-white hover:bg-yellow-600 hover:border-yellow-600 py-1 px-2 border border-gray-700 rounded">edit</span>
+                                            </a>
+                                            <a href="{% url 'lesson_delete' lesson_id=lesson.id %}">
+                                                <span class="material-icons hover:cursor-pointer hover:text-white hover:bg-red-600 hover:border-red-600 py-1 px-2 border border-gray-700 rounded">delete</span>
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
                     {% else %}
                         <tr>
-                            <td colspan="4" class="text-gray-400 bg-gray-800 py-4 text-center text-lg">No lessons yet</td>
+                            <td colspan="4" class="text-gray-400 bg-gray-800 py-4 text-center text-lg">No lessons yet
+                            </td>
                         </tr>
                     {% endif %}
-                </tbody>
+                    </tbody>
 
-            </table>
+                </table>
+            </div>
+
         </div>
-
     </div>
 {% endblock content %}
