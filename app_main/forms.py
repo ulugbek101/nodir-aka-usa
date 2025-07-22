@@ -1,7 +1,7 @@
 from django.forms import ModelForm, CharField
 from ckeditor.fields import CKEditorWidget
 
-from .models import Homework
+from .models import Homework, Comment
 
 
 class HomeworkForm(ModelForm):
@@ -16,3 +16,11 @@ class HomeworkForm(ModelForm):
         self.fields['title'].widget.attrs.update({ 'class': 'border border-slate-100 rounded px-2 py-1 outline', 'placeholder': 'Title' })
         self.fields['body'].widget.attrs.update({ 'class': 'border border-slate-100 rounded px-2 py-1 outline', 'placeholder': 'Homework description' })
         self.fields['file'].widget.attrs.update({ 'class': 'border border-slate-100 rounded px-2 py-1 outline', 'placeholder': 'File' })
+
+
+class CommentForm(ModelForm):
+    text = CharField(widget=CKEditorWidget(config_name='comment_form_box'))
+
+    class Meta:
+        model = Comment
+        fields = ['text']

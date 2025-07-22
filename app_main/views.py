@@ -1,11 +1,11 @@
 from datetime import datetime
 
-from django.utils import timezone
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.shortcuts import render, redirect, get_object_or_404
+from django.utils import timezone
 
-from app_main.models import Class, Lesson, Homework
-from app_main.forms import HomeworkForm
+from app_main.forms import HomeworkForm, CommentForm
+from app_main.models import Class, Lesson, Homework, Comment
 
 
 def home_page(request):
@@ -158,10 +158,35 @@ def delete_homework(request, homework_id):
     return redirect(f"/lesson-detail/{homework.lesson.id}/")
 
 
+def is_comment_empty(comment_body: str) -> bool:
+    from bs4 import BeautifulSoup
+    import html
+
+    soup = BeautifulSoup(comment_body, "html.parser")
+    text = soup.get_text()
+    cleaned_text = html.unescape(text).strip()
+
+    return not cleaned_text  # True if empty
+
+
 def view_homework(request, homework_id):
     homework = Homework.objects.get(id=homework_id)
+    comment_form = CommentForm()
+    comments = Comment.objects.filter(homework=homework).order_by("-created")
+
+    if request.method == "POST":
+        comment_body = request.POST.get("text", "")
+
+        if not is_comment_empty(comment_body):
+            Comment.objects.create(
+                owner=request.user,
+                homework=homework,
+                text=comment_body,
+            )
 
     context = {
         "homework": homework,
+        "comment_form": comment_form,
+        "comments": comments,
     }
     return render(request, "homework_detail.html", context)

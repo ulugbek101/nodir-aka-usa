@@ -14,9 +14,45 @@
                href="/lesson-detail/{{ homework.lesson.id }}/">Back</a>
             <br><br>
 
-            <div class="prose">
-                {{ homework.body|safe }}
+            <div class="flex flex-row justify-between">
+                <div class="prose w-1/2">
+                    {{ homework.body|safe }}
+                </div>
+
+                <div class="w-1/2">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ comment_form.media }}
+                        <div class="flex flex-col gap-5">
+                            <div class="flex flex-col gap-2">
+                                <label for="id_text" class="font-semibold text-xl">Your comment here</label>
+                                {{ comment_form.text }}
+                            </div>
+                            <button type="submit"
+                                    class="hover:bg-yellow-400 active:scale-95 transition ms-auto max-w-max py-2 px-4 text-black font-semibold bg-yellow-500 rounded-lg">
+                                Submit
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="flex flex-col gap-4 mt-5">
+                        {% for comment in comments %}
+                            <div class="px-4 py-2 rounded-lg bg-slate-500 text-white">
+                                <p class="font-semibold">
+                                    {{ comment.owner.first_name }} {{ comment.owner.last_name }} ({{ comment.owner.role|upper }})
+                                </p>
+                                <i class="prose text-white">
+                                    {{ comment.text|safe }}
+                                </i>
+                                <div class="flex flex-row justify-end">
+                                    <small>{{ comment.created }} ({{ comment.created|timesince }} ago)</small>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
 {% endblock content %}

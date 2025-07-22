@@ -30,3 +30,13 @@ class Homework(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Comment(models.Model):
+    owner = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    homework = models.ForeignKey(to=Homework, on_delete=models.CASCADE)
+    text = RichTextField()
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.owner.first_name} - {self.created}"

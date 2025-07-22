@@ -165,6 +165,9 @@ CKEDITOR_CONFIGS = {
         'toolbarCanCollapse': True,
         'removePlugins': 'elementspath',  # remove the element path bar below editor
         'resize_enabled': False,
+    },
+    'comment_form_box': {
+        'height': 150,
     }
 }
 
